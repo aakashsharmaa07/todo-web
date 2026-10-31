@@ -7,7 +7,7 @@ class Task {
 }
 
 
-let tasksArray = [];
+let tasksArray = JSON.parse(localStorage.getItem("myTasks")) || [];
 
 let taskInput = document.querySelector("#taskInput");
 let addTaskBtn = document.querySelector("#addTaskBtn");
@@ -36,7 +36,7 @@ taskForm.addEventListener("submit", (e) => {
 
     taskForm.reset();
     renderTasks();
-    
+    saveTasks();
 });
 
 
@@ -82,10 +82,18 @@ function renderTasks() {
 function deleteTask(index) {
     tasksArray.splice(index,1);
     renderTasks();
+    saveTasks();
 }
 
 
 function moveTask(index, newStatus) {
     tasksArray[index].status = newStatus; 
     renderTasks(); 
+    saveTasks();
 }
+
+function saveTasks() {
+    localStorage.setItem("myTasks", JSON.stringify(tasksArray));
+}
+
+renderTasks();
